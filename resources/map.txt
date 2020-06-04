@@ -1,0 +1,264 @@
+;;; RULES :
+;;;     - always declare name last (name of the button, either 'flexible' or 'immutable'; or an image with 'image')
+;;;     - end UI stage declaration with 'end'
+;;;     - default values for any numeric values is indicated from putting <strong>-1</strong>
+;;;     - default values for any string values is indicated from putting <strong>nil</strong>
+;;;     - default font family is indicated from putting <strong>fd</strong>
+;;;     - VARIABLES :
+;;;         +) [] : optional for immutable
+;;;         +) \n : must break when finish declaring
+;;;         -> format : x, y,[ width_scale, height_scale,]\n text,\n
+;;;                     {
+;;;     // values here must be in a strict order. Fails to do so will turn object texture into an unexpected texture
+;;;     :font_size, :horizontal_align, :vertical_align, :bg_color,
+;;;     :color, :border_color, :border_thickness, :font, :padding_top, :padding_left
+;;;                     }
+;;;         +) function name is prefixed with ->
+;;;         +) With an image, button's text is its source
+;;;
+;;;
+;;; Introduction -> level 1 (@UI_stage value)
+0 0
+!Welcome to Minesweeper
+40 0.5 0.15 -1 -1 -1 0
+flexible
+
+0 0 0.35 0.1
+!Easy
+25 0.5 0.35
+->set_level_info 1
+immutable
+
+0 0 0.35 0.1
+!Medium
+25 0.5 0.5
+->set_level_info 2
+immutable
+
+0 0 0.35 0.1
+!Hard
+25 0.5 0.65
+->set_level_info 3
+immutable
+
+0 0 0.35 0.1
+!Multiplayer
+25 0.5 0.8
+->change_UI_stage 6
+immutable
+end
+
+;;; custom UI -> level 2 (not in use)
+end
+
+;;; game play -> level 3
+;;; no percentage size for images
+0 0 40 40
+!display_clock.png
+20 0.25 0.1 0xff_000000 0xff_ffffff
+image
+
+0 0 0.3 0.1
+!00:00
+30 0.35 0.1 0xff_000000 0xff_ffffff -1 0
+flexible
+
+;;; no percentage size for images
+0 0 40 40
+!display_flag.png
+20 0.7 0.1 0xff_000000 0xff_ffffff
+image
+
+0 0 0.3 0.1
+!0
+30 0.75 0.1 0xff_000000 0xff_ffffff -1 0
+flexible
+end
+
+;;; win / lose information display
+;;; final screen -> level 4
+0 0 0.5 0.2
+!You lose
+45 0.5 0.1 0xff_000000 0xff_ffffff -1 0
+immutable
+
+0 0 0.5 0.4
+!AAAAAAAAAAAAAAAA
+35 0.5 0.35 0xff_000000 0xff_ffffff -1 0
+immutable
+
+0 0
+!Return to main menu
+35 0.5 0.8
+->change_UI_stage 1
+flexible
+end
+
+;;; skip level 5
+end
+
+;;; multiplayer
+;;; intro -> level 6
+0 0
+!Which side would you like to play as?
+45 0.5 0.2 -1 -1 -1 0
+flexible
+
+0 0 0.3 0.15
+!Host a game
+30 0.25 0.5
+->multiplayer_hosting
+immutable
+
+0 0 0.3 0.15
+!Join a random game
+30 0.75 0.5
+->multiplayer_start_point 1
+immutable
+
+0 0 0.3 0.15
+!Get me outta here!
+30 0.5 0.8
+->change_UI_stage 1
+immutable
+end
+
+;;; host customizing game -> level 7
+0 0
+!You are a host now!
+40 0.5 0.04 -1 -1 -1 0
+flexible
+
+0 0
+!You can customize the game to your favor
+40 0.5 0.125 -1 -1 -1 0
+flexible
+
+;;;
+;;; First value : Board width (number of squares on x-axis)
+;;;
+0 0 0.2 0.15
+!Board width
+35 0.1 0.3 -1 -1 -1 0
+immutable
+
+0 0 0.1 0.1
+!-
+35 0.35 0.3
+->decrease_data board_width 4 12
+immutable
+
+0 0 0.3 0.1
+!10
+35 0.63 0.3 0xff_ffffff 0xff_000000
+immutable
+
+0 0 0.1 0.1
+!+
+35 0.85 0.3
+->increase_data board_width 4 12
+immutable
+
+;;;
+;;; Second value : Board height (number of squares on y-axis)
+;;;
+0 0 0.2 0.15
+!Board height
+35 0.1 0.5 -1 -1 -1 0
+immutable
+
+0 0 0.1 0.1
+!-
+35 0.35 0.5
+->decrease_data board_height 8 12
+immutable
+
+0 0 0.3 0.1
+!10
+35 0.63 0.5 0xff_ffffff 0xff_000000
+immutable
+
+0 0 0.1 0.1
+!+
+35 0.85 0.5
+->increase_data board_height 8 12
+immutable
+
+;;;
+;;; Third value : Bombs (number of bombs inside the board)
+;;;
+0 0 0.2 0.15
+!Bombs
+35 0.1 0.7 -1 -1 -1 0
+immutable
+
+0 0 0.1 0.1
+!-
+35 0.35 0.7
+->decrease_data bombs 12 -1
+immutable
+
+0 0 0.3 0.1
+!10
+35 0.63 0.7 0xff_ffffff 0xff_000000
+immutable
+
+0 0 0.1 0.1
+!+
+35 0.85 0.7
+->increase_data bombs 12 -1
+immutable
+
+;;;
+;;; Confirmation / Cancel buttons
+;;;
+0 0 0.35 0.1
+!Let's do it!
+35 0.175 0.925
+->multiplayer_start_point 0
+immutable
+
+0 0 0.35 0.1
+!Nah. Get me out!
+35 0.825 0.925
+->change_UI_stage 6
+immutable
+end
+
+;;;
+;;; multiplayer game -> level 8
+;;; the same as level 3; however, it shows game_id ???
+;;;
+0 0 40 40
+!display_clock.png
+20 0.2 0.05 0xff_000000 0xff_ffffff
+image
+
+0 0
+!00:00
+30 0.3 0.05 0xff_000000 0xff_ffffff -1 0 nil -1 0
+flexible
+
+;;; no percentage size for images
+0 0 40 40
+!display_flag.png
+20 0.5 0.05 0xff_000000 0xff_ffffff
+image
+
+0 0
+!0
+30 0.55 0.05 0xff_000000 0xff_ffffff -1 0
+flexible
+
+;;;
+;;; small viewing window
+;;;
+870 50
+!Your opponent's
+22 -1 -1 0xff_000000 0xff_ffffff -1 0 nil 5 0
+flexible
+
+870 80
+!minified board view
+22 -1 -1 0xff_000000 0xff_ffffff -1 0 nil 5 0
+flexible
