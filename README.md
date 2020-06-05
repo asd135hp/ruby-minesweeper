@@ -14,7 +14,7 @@ There is only one tool to be utilised in this game to be able to solve the puzzl
 
 However, the flags is not the only thing to be utilised in this game as each squares in each puzzles will indicate a number of bombs that is presented in the adjacented 8 squares.
 
-Above is the accurate definition of the classical Minesweeper. However, this program does more than that.
+Above is an accurate definition of the classical Minesweeper. However, this program does more than that.
 
 Whenever a puzzle is finished, either losing or winning, the player will receive an endgame message, containing some basic informations and the rank about how well they do.
 
