@@ -5,7 +5,7 @@ The program is written in Ruby 2.6.0 and Gosu 0.15.1 using structured code, not 
 
 Available modes: Easy, Medium, Hard and (real time) Multiplayer.
 
-# What does this program is about?
+# What this program is about
 Minesweeper is a fun, classical game where the one who try to solve a level of this game without touching a single bomb.
 
 The bombs will be spread throughout the board randomly and player will try to solve for the bomb positions with a time ticking on the top-left of their screen.
